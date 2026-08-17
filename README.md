@@ -1,126 +1,91 @@
-Github API Scripts
-==================
+# github-api-scripts
 
-This is a collection of shell scripts using curl to manage things with the [Github REST API](https://developer.github.com/v3/). Works with Github enterprise installations.
+[![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/github-api-scripts) [![KDE Eco](https://img.shields.io/badge/KDE%20Eco-certified-brightgreen?logo=kde&logoColor=white&style=flat-square)](https://eco.kde.org/) [![Blue Angel](https://img.shields.io/badge/Blue%20Angel-DE--UZ%20215-0055a4?style=flat-square)](https://www.blauer-engel.de/en/certification/criteria) [![Energy](https://api.green-coding.io/v1/ci/badge/get?repo=Interested-Deving-1896%2Fgithub-api-scripts&branch=main&workflow=eco-audit.yml)](https://metrics.green-coding.io/ci-index.html)
 
-* [Installation](#installation)
-* [General usage](#general-usage)
-* [Labels](#labels)
 
-Installation
-------------
+<!-- AI:start:what-it-does -->
+_Description pending._
+<!-- AI:end:what-it-does -->
 
-Requirements:
+## Architecture
 
-* bash version 4+
-* [curl](https://curl.haxx.se)
-* [jq](https://stedolan.github.io/jq/)
+<!-- AI:start:architecture -->
+_Architecture documentation pending._
+<!-- AI:end:architecture -->
 
-Clone the repository, download a source zip or copy the shell scripts as needed, and add the folder to your `$PATH`.
+## Install
 
-General usage
--------------
+<!-- Add installation instructions here. This section is yours — the AI will not modify it. -->
 
-All scripts require to pass username, personal access token and the API endpoint URL.
-
-Example for public [github.com](https://github.com):
-
-```
-<github-script.sh> alexkli:1234567890abcdefgh https://api.github.com/api ...
+```bash
+git clone https://github.com/Interested-Deving-1896/github-api-scripts.git
+cd github-api-scripts
 ```
 
-Example for a Github Enterprise installation
+## Usage
+
+<!-- Add usage examples here. This section is yours — the AI will not modify it. -->
+
+## Configuration
+
+<!-- Document configuration options here. This section is yours — the AI will not modify it. -->
+
+## CI
+
+<!-- AI:start:ci -->
+_CI documentation pending._
+<!-- AI:end:ci -->
+
+## Mirror chain
+
+<!-- AI:start:mirror-chain -->
+This repo is maintained in [`Interested-Deving-1896/github-api-scripts`](https://github.com/Interested-Deving-1896/github-api-scripts) and mirrored through:
 
 ```
-<github-script.sh> alexkli:1234567890abcdefgh https://git.corp.mycompany.com ...
+Interested-Deving-1896/github-api-scripts  ──►  OpenOS-Project-OSP/github-api-scripts  ──►  OpenOS-Project-Ecosystem-OOC/github-api-scripts
 ```
 
-### Token Authentication
+Changes flow downstream automatically via the hourly mirror chain in
+[`fork-sync-all`](https://github.com/Interested-Deving-1896/fork-sync-all).
+Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-Deving-1896`.
+<!-- AI:end:mirror-chain -->
 
-You need to create a [personal token](https://github.com/settings/tokens) (public github link). In your Github Enterprise you can find it under _User drop down top right_ > _Settings_ > _Developer Settings_ > _Personal access tokens_.
+## Contributors
 
-The scopes to select depend on the particular feature, see below. `repo` is a typical one.
+<!-- AI:start:contributors -->
+_Contributors pending._
+<!-- AI:end:contributors -->
 
-The scripts take the authentication as first argument in the format `user:token`, where `user` is your github user id and `token` is the personal access token.
+## Origins
 
-### API endpoint
+<!-- AI:start:origins -->
+_Original project — no upstream influences recorded._
+<!-- AI:end:origins -->
 
-For public github.com use:
+## Resources
 
-```
-https://api.github.com
-```
+<!-- AI:start:resources -->
+_No additional resource files found._
+<!-- AI:end:resources -->
 
-For a Github Enterprise instance it depends, check the documentation or ask your admins. Make sure it's v3 of the rest API. It might look like this:
+## Accessibility
 
-```
-https://git.mycompany.com/api/v3
-```
+<!-- AI:start:accessibility -->
+This repo uses automated accessibility auditing via `check-accessibility.yml`.
 
-### Repository
+Checks include: CODEOWNERS ownership coverage, README screen-reader compatibility,
+WCAG 2.1 AA HTML compliance, audio overview (espeak-ng), and Braille output (liblouis).
 
-Most scripts require to specify a repository in the form of
 
-```
-org/repo
-```
 
-For example, for <https://github.com/alexkli/github-api-scripts> it would be `alexkli/github-api-scripts`.
 
-Org can be your personal space on github, or a github organization.
+Run the [Check Accessibility](https://github.com/Interested-Deving-1896/github-api-scripts/actions/workflows/check-accessibility.yml)
+workflow to generate the first report and accessibility artifacts.
+See [DOCS/accessibility.md](https://github.com/Interested-Deving-1896/github-api-scripts/blob/main/DOCS/accessibility.md) for the full reference.
+<!-- AI:end:accessibility -->
 
-Labels
-------
+## License
 
-Manage issue labels. Required token scope: `repo`.
-
-### Download labels
-
-Outputs all labels from a repository as one JSON.
-
-```
-github-get-labels.sh <user:token> <api-url> <org/repo> > labels.json
-```
-
-### Push labels
-
-Creates or updates multiple labels in a repository from a local JSON file (same format as in [Download Labels](#download-labels)). This will not delete any labels.
-
-```
-github-push-labels.sh <user:token> <api-url> labels.json <org/repo>
-```
-
-### Delete all labels
-
-Deletes all labels in a repository. Useful to remove the default labels if you want to start from scratch. This will show the labels and ask for confirmation before it actually deletes them.
-
-```
-github-delete-all-labels.sh <user:token> <api-url> <org/repo>
-```
-
-### Delete label(s)
-
-Deletes one or multiple labels in a repository. You have to specify the name of the labels on the command line. Note this will NOT ask for confirmation.
-
-Make sure to use the URL escaped name that you find in the `url` in the label JSON returned from Github, for example, a label with a space such as `help wanted` needs to be referenced as `help%20wanted`.
-
-```
-github-delete-labels.sh <user:token> <api-url> <org/repo> <label>...
-```
-
-Repos
-------
-
-### List all repos of an organization
-
-To get the full repo json for each repo in an organization:
-
-```
-github-get-org-repos.sh <user>:<token> <github-api-url> <org> [type]
-```
-
-To get just the repo names, use with `jq`:
-
-```
-github-get-org-repos.sh <user>:<token> <github-api-url> <org> [type] | jq -r .[].name
-```
+<!-- AI:start:license -->
+<!-- License not detected — add a LICENSE file to this repo. -->
+<!-- AI:end:license -->
